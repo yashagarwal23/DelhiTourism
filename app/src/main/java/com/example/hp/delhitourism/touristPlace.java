@@ -11,6 +11,7 @@ public class touristPlace {
      String location;
      String description;
      String about;
+
      touristPlace()
      {
          name="";
