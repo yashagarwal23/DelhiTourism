@@ -6,6 +6,7 @@ public class touristPlace {
      String name;
      String id;
      URL imageURL;
+     String imageLocation;
      int starRating;
      String category;
      String location;
@@ -13,11 +14,12 @@ public class touristPlace {
      String about;
      touristPlace()
      {
-         name="";
+         name="NSIT";
          id="";
-         starRating=0;
+         starRating=4;
+         imageLocation="";
          category="";
-         location="";
+         location="Delhi";
          description="";
          about="";
      }
