@@ -17,6 +17,7 @@ public class touristPlace {
      String description;
      String about;
 
+
      private Context context;
 
      touristPlace(Context context) {
