@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 public class CardAdapter  extends BaseAdapter {
     Context c;
-    TouristPlace temp=new TouristPlace(c);
+    TouristPlace temp;
     //ArrayList<Spacecraft> spacecrafts;
 
     public CardAdapter(Context c) {
         this.c = c;
+        temp=new TouristPlace(c);
         //this.spacecrafts = spacecrafts;
     }
 
