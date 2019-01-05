@@ -1,5 +1,9 @@
 package com.example.hp.delhitourism;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.net.URL;
 
 public class touristPlace {
@@ -12,6 +16,13 @@ public class touristPlace {
      String location;
      String description;
      String about;
+
+     private Context context;
+
+     touristPlace(Context context) {
+         this.context = context;
+     }
+
      touristPlace()
      {
          name="NSIT";
@@ -23,4 +34,21 @@ public class touristPlace {
          description="";
          about="";
      }
+
+    public String getName() {
+         return name;
+    }
+
+    public int getRating() {
+         return starRating;
+    }
+
+    public Bitmap getImage() {
+         Bitmap image = BitmapFactory.decodeResource(context.getResources(),R.drawable.nsit);
+         return image;
+    }
+
+    public String getLoacality() {
+         return location;
+    }
 }
