@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 import java.net.URL;
 
-public class touristPlace {
+public class TouristPlace {
      String name;
      String id;
      URL imageURL;
@@ -20,11 +20,7 @@ public class touristPlace {
 
      private Context context;
 
-     touristPlace(Context context) {
-         this.context = context;
-     }
-
-     touristPlace()
+     TouristPlace(Context context)
      {
          name="NSIT";
          id="";
@@ -34,6 +30,7 @@ public class touristPlace {
          location="Delhi";
          description="";
          about="";
+         this.context = context.getApplicationContext();
      }
 
     public String getName() {
@@ -45,6 +42,9 @@ public class touristPlace {
     }
 
     public Bitmap getImage() {
+
+//         TODO implement the proper method
+
          Bitmap image = BitmapFactory.decodeResource(context.getResources(),R.drawable.nsit);
          return image;
     }

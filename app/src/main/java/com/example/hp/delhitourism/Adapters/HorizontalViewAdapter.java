@@ -10,13 +10,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.hp.delhitourism.R;
-import com.example.hp.delhitourism.touristPlace;
+import com.example.hp.delhitourism.TouristPlace;
 
 public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAdapter.HorizontalViewHolder> {
 
-    private touristPlace[] data;
+    private TouristPlace[] data;
 
-    public HorizontalViewAdapter(touristPlace[] data) {
+    public HorizontalViewAdapter(TouristPlace[] data) {
         this.data = data;
     }
 
