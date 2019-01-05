@@ -22,7 +22,7 @@ public class CardAdapter  extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     /*@Override
@@ -59,7 +59,7 @@ public class CardAdapter  extends BaseAdapter {
         //temp.starRating=4;
         nameTxt.setText(temp.name);
         propTxt.setText(temp.location);
-        ratingBar.setNumStars(temp.starRating);
+        ratingBar.setRating(temp.starRating);
         //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {

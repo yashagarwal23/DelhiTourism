@@ -23,6 +23,10 @@
             android:name=".seeAll"
             android:label="@string/title_activity_see_all"
             android:theme="@style/AppTheme"></activity>
+        <provider
+            android:authorities="com.example.hp.delhitourism"
+            android:name=".data.placeProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
