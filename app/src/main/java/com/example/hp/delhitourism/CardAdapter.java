@@ -9,20 +9,23 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CardAdapter  extends BaseAdapter {
     Context c;
     TouristPlace temp;
-    //ArrayList<Spacecraft> spacecrafts;
+    ArrayList<TouristPlace> TP;
 
-    public CardAdapter(Context c) {
+    public CardAdapter(Context c, ArrayList<TouristPlace> TP) {
         this.c = c;
         temp=new TouristPlace(c);
+        this.TP=TP;
         //this.spacecrafts = spacecrafts;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return TP.size();
     }
 
     /*@Override
@@ -37,7 +40,7 @@ public class CardAdapter  extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return temp;
+        return TP.get(i);
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -46,7 +49,7 @@ public class CardAdapter  extends BaseAdapter {
             view= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
         }
 
-        //final Spacecraft s= (Spacecraft) this.getItem(i);
+        final TouristPlace s= (TouristPlace) this.getItem(i);
 
         ImageView img= (ImageView) view.findViewById(R.id.placeImage);
         TextView nameTxt= (TextView) view.findViewById(R.id.placeName);
@@ -57,9 +60,9 @@ public class CardAdapter  extends BaseAdapter {
         //temp.name="NSIT";
         //temp.location="Delhi";
         //temp.starRating=4;
-        nameTxt.setText(temp.name);
-        propTxt.setText(temp.location);
-        ratingBar.setRating(temp.starRating);
+        nameTxt.setText(s.getName());
+        propTxt.setText(s.getLocation());
+        ratingBar.setRating(s.getStarRating());
         //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import com.example.hp.delhitourism.offlineDatabase.databaseAccess;
 public class seeAll extends AppCompatActivity {
 
+    ArrayList<TouristPlace> TP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +25,16 @@ public class seeAll extends AppCompatActivity {
 
         databaseAccess da= databaseAccess.getInstance(getApplicationContext());
         da.open();
-       // ArrayList <TouristPlace>;
+        int n=da.getCount();
+        TP =new ArrayList<TouristPlace>();
+
+        for(int i=1;i<=n;i++)
+        {
+            TouristPlace temp=da.getPlace(i);
+            TP.add(temp);
+        }
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new CardAdapter(this));
+        gridview.setAdapter(new CardAdapter(this,TP));
         gridview.setNumColumns(2);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +44,10 @@ public class seeAll extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
+    }
+
+    public ArrayList<TouristPlace> getTP() {
+        return TP;
     }
 
     @Override

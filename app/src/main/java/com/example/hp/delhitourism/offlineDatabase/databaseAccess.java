@@ -5,12 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.hp.delhitourism.TouristPlace;
+
 public class databaseAccess {
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
     private static databaseAccess instance;
     Cursor c=null;
-
     private databaseAccess(Context context)
     {
         this.openHelper=new openDatabaseHelper(context);
@@ -38,9 +39,32 @@ public class databaseAccess {
         }
     }
 
-    /*public int getCount()
+    public int getCount()
     {
-        c=db.rawQuery("select count(*) from touristPlace",new String[][]);
+        int ans=1;
+        c=db.rawQuery("select count(*) from touristPlace",null);
+        while(c.moveToNext())
+        {
+            String s=c.getString(0);
+            ans=Integer.parseInt(s);
+        }
+        return ans;
+    }
 
-    }*/
+    public TouristPlace getPlace(int i)
+    {
+        c=db.rawQuery("select * from touristPlace where id = '"+i+"'",new String[]{});
+        TouristPlace temp=new TouristPlace();
+        while(c.moveToNext())
+        {
+            temp.setName(c.getString(0));
+            temp.setId(c.getString(1));
+            temp.setStarRating(Integer.parseInt(c.getString(2)));
+            temp.setCategory(c.getString(3));
+            temp.setLocation(c.getString(4));
+            temp.setDescription(c.getString(5));
+            temp.setAbout(c.getString(6));
+        }
+        return temp;
+    }
 }
