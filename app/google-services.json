@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "94758617384",
+    "firebase_url": "https://delhitourism-57a77.firebaseio.com",
+    "project_id": "delhitourism-57a77",
+    "storage_bucket": "delhitourism-57a77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94758617384:android:95d74c2666a5e3a9",
+        "android_client_info": {
+          "package_name": "com.example.hp.delhitourism"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94758617384-93hq6qkh04i6g4c2dm1stqtiaetea09f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU8DyFmtunW3EB3P88jWDsq5sk790ZG1w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
