@@ -32,8 +32,8 @@ public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAd
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, int i) {
         holder.placeImage.setImageBitmap(data[i].getImage());
         holder.placeName.setText(data[i].getName());
-        holder.placeRating.setNumStars(data[i].getRating());
-        holder.placeLocality.setText(data[i].getLoacality());
+        holder.placeRating.setNumStars(data[i].getStarRating());
+        holder.placeLocality.setText(data[i].getLocation());
     }
 
     @Override

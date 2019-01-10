@@ -1,6 +1,7 @@
 package com.example.hp.delhitourism;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,27 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+
 public class CardAdapter  extends BaseAdapter {
     Context c;
     TouristPlace temp;
-    //ArrayList<Spacecraft> spacecrafts;
-
-    public CardAdapter(Context c) {
+    ArrayList<TouristPlace> TP;
+    public CardAdapter(Context c, ArrayList<TouristPlace> TP) {
         this.c = c;
         temp=new TouristPlace(c);
+        this.TP=TP;
         //this.spacecrafts = spacecrafts;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return TP.size();
     }
 
     /*@Override
@@ -37,7 +45,7 @@ public class CardAdapter  extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return temp;
+        return TP.get(i);
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -46,7 +54,7 @@ public class CardAdapter  extends BaseAdapter {
             view= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
         }
 
-        //final Spacecraft s= (Spacecraft) this.getItem(i);
+        final TouristPlace s= (TouristPlace) this.getItem(i);
 
         ImageView img= (ImageView) view.findViewById(R.id.placeImage);
         TextView nameTxt= (TextView) view.findViewById(R.id.placeName);
@@ -57,9 +65,9 @@ public class CardAdapter  extends BaseAdapter {
         //temp.name="NSIT";
         //temp.location="Delhi";
         //temp.starRating=4;
-        nameTxt.setText(temp.name);
-        propTxt.setText(temp.location);
-        ratingBar.setRating(temp.starRating);
+        propTxt.setText(s.getLocation());
+        ratingBar.setRating(s.getStarRating());
+        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/delhitourism-57a77.appspot.com/o/dtu.jpg?alt=media&token=86fe47d4-6e18-42de-8b52-31da122ffcc1").into(img);
         //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {
