@@ -12,52 +12,47 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class TouristPlace implements Serializable {
-     private String name;
-     private String id;
-     private URL imageURL;
-     private String imageLocation;
-     private int starRating;
-     private String category;
-     private String location;
-     private String description;
-     private String about;
-     private double latitude;
-     private double longitude;
+    private String name;
+    private String id;
+    private URL imageURL;
+    private String imageLocation;
+    private int starRating;
+    private String category;
+    private String location;
+    private String description;
+    private String about;
+    private double latitude;
+    private double longitude;
 
-     public TouristPlace()
-     {
-         name="NSIT";
-         id="";
-         starRating=4;
-         imageLocation="";
-         category="";
-         location="Delhi";
-         description="";
-         about="";
-     }
+    public TouristPlace() {
+        name = "NSIT";
+        id = "";
+        starRating = 4;
+        imageLocation = "";
+        category = "";
+        location = "Delhi";
+        description = "";
+        about = "";
+    }
 
     public URL getImageURL() {
         return imageURL;
     }
-
-
 
     public void setName(String name) {
         this.name = name;
     }
 
     public String getName() {
-         return name;
+        return name;
     }
 
 
-
-    public  void setId(String id)
-    {
-        this.id=id;
+    public void setId(String id) {
+        this.id = id;
     }
-    public String getId()
-    {
+
+    public String getId() {
         return id;
     }
 
@@ -112,21 +107,22 @@ public class TouristPlace implements Serializable {
     public void setImageURL(URL imageURL) {
         this.imageURL = imageURL;
     }
+
     public Bitmap getImage(Context context) {
 
 //         TODO implement the proper method
 
-         Bitmap image = BitmapFactory.decodeResource(context.getResources(),R.drawable.nsit);
-         return image;
+        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.nsit);
+        return image;
     }
 
     public void setCoordinates(LatLng coordinates) {
-         latitude = coordinates.latitude;
-         longitude = coordinates.longitude;
+        latitude = coordinates.latitude;
+        longitude = coordinates.longitude;
     }
 
     public LatLng getCoordinates() {
-         return new LatLng(latitude, longitude);
+        return new LatLng(latitude, longitude);
     }
 
 }
