@@ -23,7 +23,7 @@ public class CardAdapter  extends BaseAdapter {
     ArrayList<TouristPlace> TP;
     public CardAdapter(Context c, ArrayList<TouristPlace> TP) {
         this.c = c;
-        temp=new TouristPlace(c);
+        temp=new TouristPlace();
         this.TP=TP;
         //this.spacecrafts = spacecrafts;
     }

@@ -16,7 +16,7 @@ public class Utils extends AppCompatActivity {
 
         TouristPlace[] touristPlaces = new TouristPlace[10];
         for(int i = 0; i < 10; i++) {
-            touristPlaces[i] = new TouristPlace(context);
+            touristPlaces[i] = new TouristPlace();
         }
 
         return touristPlaces;
