@@ -38,7 +38,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         holder.categoryTextView.setText(categoryNames[i]);
         RecyclerView horizontalRecyclerView = holder.horizontalRecyclerView;
         horizontalRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        horizontalRecyclerView.setAdapter(new HorizontalViewAdapter(tourisPlaces));
+        horizontalRecyclerView.setAdapter(new HorizontalViewAdapter(tourisPlaces, context));
     }
 
     @Override

@@ -14,6 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.hp.delhitourism.Adapters.CategoryRecyclerViewAdapter;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -91,6 +96,21 @@ public class MainActivity extends AppCompatActivity
             //myIntent.putExtra("key", value); //Optional parameters
             MainActivity.this.startActivity(myIntent);
         } else if (id == R.id.nav_gallery) {
+//            TODO implement proper intent
+
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+
+            ArrayList<TouristPlace> touristPlaces = new ArrayList<>();
+
+            for(int i = 0; i < 10; i++) {
+                TouristPlace touristPlace = new TouristPlace();
+                touristPlace.setCoordinates(new LatLng(-33.852 + i*5 , 151.211 + i*5));
+                touristPlaces.add(touristPlace);
+            }
+            Bundle args = new Bundle();
+            args.putSerializable("tourist places", touristPlaces);
+            intent.putExtra("bundle", args);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 

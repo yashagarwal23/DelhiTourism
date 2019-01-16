@@ -1,5 +1,6 @@
 package com.example.hp.delhitourism.Adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import com.example.hp.delhitourism.TouristPlace;
 public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAdapter.HorizontalViewHolder> {
 
     private TouristPlace[] data;
+    private Context context;
 
-    public HorizontalViewAdapter(TouristPlace[] data) {
+    public HorizontalViewAdapter(TouristPlace[] data, Context context) {
         this.data = data;
+        this.context = context.getApplicationContext();
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAd
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, int i) {
-        holder.placeImage.setImageBitmap(data[i].getImage());
+        holder.placeImage.setImageBitmap(data[i].getImage(context));
         holder.placeName.setText(data[i].getName());
         holder.placeRating.setNumStars(data[i].getStarRating());
         holder.placeLocality.setText(data[i].getLocation());

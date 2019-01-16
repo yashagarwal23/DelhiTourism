@@ -3,22 +3,26 @@ package com.example.hp.delhitourism;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
 import java.net.URL;
 
-public class TouristPlace {
-     String name;
-     String id;
-     URL imageURL;
-     String imageLocation;
-     int starRating;
-     String category;
-     String location;
-     String description;
-     String about;
-
-
-     private Context context;
+public class TouristPlace implements Serializable {
+     private String name;
+     private String id;
+     private URL imageURL;
+     private String imageLocation;
+     private int starRating;
+     private String category;
+     private String location;
+     private String description;
+     private String about;
+     private double latitude;
+     private double longitude;
 
      public TouristPlace()
      {
@@ -31,18 +35,12 @@ public class TouristPlace {
          description="";
          about="";
      }
-     public TouristPlace(Context context)
-     {
-         name="NSIT";
-         id="";
-         starRating=4;
-         imageLocation="";
-         category="";
-         location="Delhi";
-         description="";
-         about="";
-         this.context = context.getApplicationContext();
-     }
+
+    public URL getImageURL() {
+        return imageURL;
+    }
+
+
 
     public void setName(String name) {
         this.name = name;
@@ -51,6 +49,9 @@ public class TouristPlace {
     public String getName() {
          return name;
     }
+
+
+
     public  void setId(String id)
     {
         this.id=id;
@@ -111,12 +112,21 @@ public class TouristPlace {
     public void setImageURL(URL imageURL) {
         this.imageURL = imageURL;
     }
-    public Bitmap getImage() {
+    public Bitmap getImage(Context context) {
 
 //         TODO implement the proper method
 
          Bitmap image = BitmapFactory.decodeResource(context.getResources(),R.drawable.nsit);
          return image;
+    }
+
+    public void setCoordinates(LatLng coordinates) {
+         latitude = coordinates.latitude;
+         longitude = coordinates.longitude;
+    }
+
+    public LatLng getCoordinates() {
+         return new LatLng(latitude, longitude);
     }
 
 }
