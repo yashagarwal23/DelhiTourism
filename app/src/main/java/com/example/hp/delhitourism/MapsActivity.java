@@ -1,6 +1,7 @@
 package com.example.hp.delhitourism;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -10,9 +11,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
-import com.example.hp.delhitourism.Adapters.MapRecyclerViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,20 +45,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle args = intent.getBundleExtra("bundle");
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
-        RecyclerView horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
-        horizontalRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(horizontalRecyclerView);
+        initialiseRecyclerView();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+    }
 
+    void initialiseRecyclerView() {
 
+        RecyclerView horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        horizontalRecyclerView.setLayoutManager(layoutManager);
+        horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
+
+        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(horizontalRecyclerView);
+
+        horizontalRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    View centerView = snapHelper.findSnapView(layoutManager);
+                    if (centerView != null) {
+                        int pos = layoutManager.getPosition(centerView);
+                        updateMapPosition(pos);
+                    }
+                }
+            }
+
+            private void updateMapPosition(int pos) {
+                if(mMap != null) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(touristPlaces.get(pos).getCoordinates()));
+                }
+            }
+        });
     }
 
 
@@ -102,4 +132,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+
+
+
+
+
+
+
+
+    class MapRecyclerViewAdapter extends RecyclerView.Adapter<MapRecyclerViewAdapter.MapRecyclerViewHolder> {
+
+        private ArrayList<TouristPlace> touristPlaces;
+        private Context context;
+
+        public MapRecyclerViewAdapter(ArrayList<TouristPlace> touristPlaces, Context context) {
+            this.touristPlaces = touristPlaces;
+            this.context = context.getApplicationContext();
+        }
+
+        @NonNull
+        @Override
+        public MapRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            LayoutInflater inflator = LayoutInflater.from(viewGroup.getContext());
+            View view = inflator.inflate(R.layout.map_card_view, viewGroup, false);
+            return new MapRecyclerViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MapRecyclerViewHolder holder, int i) {
+            TouristPlace touristPlace = touristPlaces.get(i);
+            holder.placeName.setText(touristPlace.getName());
+            holder.placeRating.setNumStars(touristPlace.getStarRating());
+            holder.placeCategory.setText(touristPlace.getCategory());
+            holder.placeDescription.setText(touristPlace.getDescription());
+            holder.placeImage.setImageBitmap(touristPlace.getImage(context));
+        }
+
+        @Override
+        public int getItemCount() {
+            return touristPlaces.size();
+        }
+
+        public class MapRecyclerViewHolder extends RecyclerView.ViewHolder {
+
+            ImageView placeImage;
+            TextView placeName, placeCategory, placeDescription;
+            RatingBar placeRating;
+
+            public MapRecyclerViewHolder(@NonNull View itemView) {
+                super(itemView);
+                placeImage = itemView.findViewById(R.id.map_place_image_view);
+                placeName = itemView.findViewById(R.id.map_place_name);
+                placeRating = itemView.findViewById(R.id.map_place_rating);
+                placeCategory = itemView.findViewById(R.id.map_place_category);
+                placeDescription = itemView.findViewById(R.id.map_place_description);
+            }
+        }
+
+    }
+
+
 }
