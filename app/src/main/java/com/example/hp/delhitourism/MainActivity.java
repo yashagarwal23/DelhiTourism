@@ -104,7 +104,9 @@ public class MainActivity extends AppCompatActivity
 
             for(int i = 0; i < 10; i++) {
                 TouristPlace touristPlace = new TouristPlace();
+
                 touristPlace.setCoordinates(new LatLng(-33.852 + i*5 , 151.211 + i*5));
+
                 touristPlaces.add(touristPlace);
             }
             Bundle args = new Bundle();

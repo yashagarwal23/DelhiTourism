@@ -7,9 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 
 import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
+import com.example.hp.delhitourism.Adapters.MapRecyclerViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,11 +38,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle args = intent.getBundleExtra("bundle");
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
-        TouristPlace touristPlaceArray[] = new TouristPlace[touristPlaces.size()];
-
         RecyclerView horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
         horizontalRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        horizontalRecyclerView.setAdapter(new HorizontalViewAdapter(touristPlaces.toArray(touristPlaceArray), this));
+        horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(horizontalRecyclerView);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
