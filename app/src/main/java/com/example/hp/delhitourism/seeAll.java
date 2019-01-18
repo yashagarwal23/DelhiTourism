@@ -1,5 +1,6 @@
 package com.example.hp.delhitourism;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,8 @@ import android.widget.GridView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import com.example.hp.delhitourism.offlineDatabase.databaseAccess;
+import com.google.android.gms.maps.model.LatLng;
+
 public class seeAll extends AppCompatActivity {
 
     ArrayList<TouristPlace> TP;
@@ -36,14 +39,23 @@ public class seeAll extends AppCompatActivity {
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardAdapter(this,TP));
         gridview.setNumColumns(2);
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent myIntent = new Intent(seeAll.this,description.class);
+                //myIntent.putExtra("key", value); //Optional parameters
+                ArrayList<TouristPlace> touristPlaces = TP;
+
+                Bundle args = new Bundle();
+                args.putSerializable("tourist places", TP);
+                myIntent.putExtra("bundle", args);
+                startActivity(myIntent);
+                //eeAll.this.startActivity(myIntent);
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
             }
-        });*/
+        });
     }
 
     public ArrayList<TouristPlace> getTP() {
