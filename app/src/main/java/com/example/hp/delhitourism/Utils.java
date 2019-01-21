@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Utils extends AppCompatActivity {
 
+
     public static TouristPlace[] getTouristPlaces(Context context, String categoryName) {
 
         //        TODO implement proper method involving database

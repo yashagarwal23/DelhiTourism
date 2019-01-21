@@ -41,6 +41,10 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
         holder.placeName.setText(temp.getName());
         holder.placeRating.setNumStars(temp.getStarRating());
         holder.placeLocality.setText(temp.getLocation());
+        holder.placeRating.setRating(temp.getStarRating());
+        holder.placeRating.setMax(5);
+        Picasso.get().load(temp.getImageLocation()).into(holder.placeImage);
+
     }
 
     @Override

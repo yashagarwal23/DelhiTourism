@@ -65,9 +65,11 @@ public class CardAdapter  extends BaseAdapter {
         //temp.name="NSIT";
         //temp.location="Delhi";
         //temp.starRating=4;
+        nameTxt.setText(s.getName());
         propTxt.setText(s.getLocation());
         ratingBar.setRating(s.getStarRating());
-        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/delhitourism-57a77.appspot.com/o/dtu.jpg?alt=media&token=86fe47d4-6e18-42de-8b52-31da122ffcc1").into(img);
+        //ratingBar.setNumStars(s.getStarRating());
+        Picasso.get().load(s.getImageLocation()).into(img);
         //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {
