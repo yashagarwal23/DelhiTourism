@@ -59,11 +59,16 @@ public class databaseAccess {
         {
             temp.setName(c.getString(0));
             temp.setId(c.getString(1));
-            temp.setStarRating(Integer.parseInt(c.getString(2)));
-            temp.setCategory(c.getString(3));
-            temp.setLocation(c.getString(4));
-            temp.setDescription(c.getString(5));
-            temp.setAbout(c.getString(6));
+            temp.setImageLocation(c.getString(2));
+            temp.setStarRating(Integer.parseInt(c.getString(3)));
+            //temp.setStarRating(4);
+            temp.setCategory(c.getString(4));
+            temp.setLocation(c.getString(5));
+            temp.setDescription(c.getString(6));
+            temp.setAbout(c.getString(7));
+            temp.setLatitude(Double.parseDouble(c.getString(8)));
+            temp.setLongitude(Double.parseDouble(c.getString(9)));
+
         }
         return temp;
     }
