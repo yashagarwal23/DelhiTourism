@@ -88,6 +88,10 @@ public class TouristPlace implements Serializable {
         this.starRating = starRating;
     }
 
+    public void setStarRating(double starRating) {
+        this.starRating = (int)starRating;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
