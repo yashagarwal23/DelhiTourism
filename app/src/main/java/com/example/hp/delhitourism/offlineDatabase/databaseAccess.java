@@ -60,7 +60,7 @@ public class databaseAccess {
             temp.setName(c.getString(0));
             temp.setId(c.getString(1));
             temp.setImageLocation(c.getString(2));
-            temp.setStarRating(Integer.parseInt(c.getString(3)));
+            temp.setStarRating(Double.parseDouble(c.getString(3)));
             //temp.setStarRating(4);
             temp.setCategory(c.getString(4));
             temp.setLocation(c.getString(5));
