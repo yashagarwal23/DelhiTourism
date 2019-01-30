@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -14,6 +17,8 @@ import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -23,9 +28,11 @@ import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -35,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int RequestLocation = 100;
     private GoogleMap mMap;
     ArrayList<TouristPlace> touristPlaces;
+    ArrayList<Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +86,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             private void updateMapPosition(int pos) {
                 if(mMap != null) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(touristPlaces.get(pos).getCoordinates()));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(pos).getPosition(), 14));
+                    markers.get(pos).showInfoWindow();
                 }
             }
         });
     }
+
+
 
 
     /**
@@ -101,14 +112,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         showCurrentLocationButton();
 
         System.out.println("bvdhbvhdbv");
+        markers = new ArrayList<>();
 
         for(int i = 0; i < touristPlaces.size(); i++) {
             LatLng marker = touristPlaces.get(i).getCoordinates();
             System.out.println("Added Marker");
-            mMap.addMarker(new MarkerOptions().position(marker).title(touristPlaces.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            Marker locationMarker = mMap.addMarker(new MarkerOptions().position(marker).title(touristPlaces.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            markers.add(locationMarker);
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(touristPlaces.get(0).getCoordinates()));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 14));
+        markers.get(0).showInfoWindow();
     }
 
     private void showCurrentLocationButton() {

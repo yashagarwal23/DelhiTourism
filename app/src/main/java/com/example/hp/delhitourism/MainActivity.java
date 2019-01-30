@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.hp.delhitourism.Adapters.CategoryRecyclerViewAdapter;
+import com.example.hp.delhitourism.offlineDatabase.databaseAccess;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
@@ -99,16 +100,18 @@ public class MainActivity extends AppCompatActivity
 //            TODO implement proper intent
 
             Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            databaseAccess db = databaseAccess.getInstance(this);
+            db.open();
+            ArrayList<TouristPlace> touristPlaces = db.getTouristPlacesByCategory("Museum");
 
-            ArrayList<TouristPlace> touristPlaces = new ArrayList<>();
+//            for(int i = 0; i < 10; i++) {
+//                TouristPlace touristPlace = new TouristPlace();
+//
+//                touristPlace.setCoordinates(new LatLng(-33.852 + i*5 , 151.211 + i*5));
+//
+//                touristPlaces.add(touristPlace);
+//            }
 
-            for(int i = 0; i < 10; i++) {
-                TouristPlace touristPlace = new TouristPlace();
-
-                touristPlace.setCoordinates(new LatLng(-33.852 + i*5 , 151.211 + i*5));
-
-                touristPlaces.add(touristPlace);
-            }
             Bundle args = new Bundle();
             args.putSerializable("tourist places", touristPlaces);
             intent.putExtra("bundle", args);
