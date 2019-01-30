@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.hp.delhitourism.R;
 import com.example.hp.delhitourism.TouristPlace;
+import com.squareup.picasso.Picasso;
 
 public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAdapter.HorizontalViewHolder> {
 
@@ -33,7 +34,8 @@ public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAd
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, int i) {
-        holder.placeImage.setImageBitmap(data[i].getImage(context));
+//        holder.placeImage.setImageBitmap(data[i].getImage(context));
+        Picasso.get().load(data[i].getImageLocation()).into(holder.placeImage);
         holder.placeName.setText(data[i].getName());
         holder.placeRating.setNumStars(data[i].getStarRating());
         holder.placeLocality.setText(data[i].getLocation());

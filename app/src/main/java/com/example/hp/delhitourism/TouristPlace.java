@@ -28,7 +28,7 @@ public class TouristPlace implements Serializable {
         name = "NSIT";
         id = "";
         starRating = 4;
-        imageLocation = "";
+        imageLocation = "https://firebasestorage.googleapis.com/v0/b/delhi-tourism-f9e84.appspot.com/o/nsit.png?alt=media&token=dc849b3b-4e5f-4c43-a10d-c25e1c765cac";
         category = "";
         location = "Delhi";
         description = "";
@@ -108,10 +108,6 @@ public class TouristPlace implements Serializable {
         return location;
     }
 
-    public void setImageURL(URL imageURL) {
-        this.imageURL = imageURL;
-    }
-
     public void setLatitude(double latitude)
     {
         this.latitude=latitude;
@@ -121,13 +117,7 @@ public class TouristPlace implements Serializable {
     {
         this.longitude=longitude;
     }
-    public Bitmap getImage(Context context) {
 
-//         TODO implement the proper method
-
-        Bitmap image = BitmapFactory.decodeResource(context.getResources(), R.drawable.nsit);
-        return image;
-    }
 
     public void setCoordinates(LatLng coordinates) {
         latitude = coordinates.latitude;

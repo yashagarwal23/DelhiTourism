@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -180,7 +181,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             holder.placeRating.setNumStars(touristPlace.getStarRating());
             holder.placeCategory.setText(touristPlace.getCategory());
             holder.placeDescription.setText(touristPlace.getDescription());
-            holder.placeImage.setImageBitmap(touristPlace.getImage(context));
+            Picasso.get().load(touristPlace.getImageLocation()).into(holder.placeImage);
+
         }
 
         @Override
