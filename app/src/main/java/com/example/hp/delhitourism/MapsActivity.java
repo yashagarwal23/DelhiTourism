@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<Marker> markers;
     private RecyclerView horizontalRecyclerView;
     HashMap<Marker, Integer> markerHash = new HashMap<>();
+    ImageButton googleMapsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle args = intent.getBundleExtra("bundle");
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
+        googleMapsButton = findViewById(R.id.google_maps_button);
+//        googleMapsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int pos = horizontalRecyclerView.
+//            }
+//        });
         initialiseRecyclerView();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -107,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         showCurrentLocationButton();
-        System.out.println("bvdhbvhdbv");
+
         markers = new ArrayList<>();
 
         for(int i = 0; i < touristPlaces.size(); i++) {
@@ -121,15 +130,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
+//                TODO Add the google maps direction button
+
                 marker.showInfoWindow();
+                googleMapsButton.setVisibility(View.VISIBLE);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
                 if(markerHash.containsKey(marker))
                     horizontalRecyclerView.scrollToPosition(markerHash.get(marker));
-
                 return true;
             }
         });
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 14));
         markers.get(0).showInfoWindow();
     }
@@ -155,11 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-
-
-
-
 
 
 
@@ -190,7 +196,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             holder.placeCategory.setText(touristPlace.getCategory());
             holder.placeDescription.setText(touristPlace.getDescription());
             Picasso.get().load(touristPlace.getImageLocation()).into(holder.placeImage);
-
         }
 
         @Override
