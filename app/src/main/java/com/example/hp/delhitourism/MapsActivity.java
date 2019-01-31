@@ -4,9 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -17,18 +14,14 @@ import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     ArrayList<TouristPlace> touristPlaces;
     ArrayList<Marker> markers;
+    private RecyclerView horizontalRecyclerView;
+    HashMap<Marker, Integer> markerHash = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     void initialiseRecyclerView() {
 
-        RecyclerView horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
+        horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         horizontalRecyclerView.setLayoutManager(layoutManager);
         horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
@@ -111,7 +107,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         showCurrentLocationButton();
-
         System.out.println("bvdhbvhdbv");
         markers = new ArrayList<>();
 
@@ -120,7 +115,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println("Added Marker");
             Marker locationMarker = mMap.addMarker(new MarkerOptions().position(marker).title(touristPlaces.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
             markers.add(locationMarker);
+            markerHash.put(locationMarker, i);
         }
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
+                if(markerHash.containsKey(marker))
+                    horizontalRecyclerView.scrollToPosition(markerHash.get(marker));
+
+                return true;
+            }
+        });
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 14));
         markers.get(0).showInfoWindow();
