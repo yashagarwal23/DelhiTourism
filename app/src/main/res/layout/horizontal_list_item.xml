@@ -19,8 +19,8 @@
             android:layout_weight="5"/>
 
         <TextView
-            android:id="@+id/see_all_button"
-            android:text="See All"
+            android:id="@+id/see_on_map_button"
+            android:text="See All On Map"
             android:textAlignment="center"
             android:layout_width="0dp"
             android:layout_height="20dp"

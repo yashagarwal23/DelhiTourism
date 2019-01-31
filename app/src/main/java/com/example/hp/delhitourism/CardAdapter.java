@@ -25,7 +25,6 @@ public class CardAdapter  extends BaseAdapter {
         this.c = c;
         temp=new TouristPlace();
         this.TP=TP;
-        //this.spacecrafts = spacecrafts;
     }
 
     @Override
@@ -69,7 +68,10 @@ public class CardAdapter  extends BaseAdapter {
         propTxt.setText(s.getLocation());
         ratingBar.setRating(s.getStarRating());
         //ratingBar.setNumStars(s.getStarRating());
-        Picasso.get().load(s.getImageLocation()).into(img);
+
+            Picasso.get().load(s.getImageLocation()).into(img);
+
+
         //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {
