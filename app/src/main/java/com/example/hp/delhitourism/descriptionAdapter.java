@@ -27,7 +27,6 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
         this.context = c;
         temp=new TouristPlace();
         this.TP=TP;
-        //this.spacecrafts = spacecrafts;
     }
     @NonNull
     @Override
@@ -81,60 +80,5 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
             getMapsIntent = itemView.findViewById(R.id.displayMaps);
         }
     }
-    /*public descriptionHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        LayoutInflater inflator = LayoutInflater.from(viewGroup.getContext());
-        View view = inflator.inflate(R.layout.model, viewGroup, false);
-        return new descriptionHolder(view);
-    }
-    /*@Override
-    public int getCount() {
-        return TP.size();
-    }*/
 
-    /*@Override
-    public Object getItem(int i) {
-        return spacecrafts.get(i);
-    }*/
-
-    /*@Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return TP.get(i);
-    }
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if(view==null)
-        {
-            view= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
-        }
-
-        final TouristPlace s= (TouristPlace) this.getItem(i);
-
-        ImageView img= (ImageView) view.findViewById(R.id.placeImage);
-        TextView nameTxt= (TextView) view.findViewById(R.id.placeName);
-        TextView propTxt= (TextView) view.findViewById(R.id.placeLocality);
-        RatingBar ratingBar=(RatingBar) view.findViewById(R.id.placeRating);
-
-        //BIND
-        //temp.name="NSIT";
-        //temp.location="Delhi";
-        //temp.starRating=4;
-        propTxt.setText(s.getLocation());
-        ratingBar.setRating(s.getStarRating());
-        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/delhitourism-57a77.appspot.com/o/dtu.jpg?alt=media&token=86fe47d4-6e18-42de-8b52-31da122ffcc1").into(img);
-        //img.setImageResource(temp.starRating);
-
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(c, s.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        /*return view;
-    }*/
 }

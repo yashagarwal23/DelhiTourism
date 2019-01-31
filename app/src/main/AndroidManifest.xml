@@ -59,7 +59,7 @@
         <activity
             android:name=".description"
             android:label="@string/title_activity_description"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

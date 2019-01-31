@@ -23,8 +23,8 @@ public class description extends AppCompatActivity {
         setContentView(R.layout.activity_description);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
        // setSupportActionBar(toolbar);
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("bundle");
@@ -50,9 +50,9 @@ public class description extends AppCompatActivity {
     }
 
 
-    /*@Override
+    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }*/
+    }
 }
