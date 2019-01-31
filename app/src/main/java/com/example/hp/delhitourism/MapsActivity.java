@@ -15,26 +15,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final int RequestLocation = 100;
     private GoogleMap mMap;
     ArrayList<TouristPlace> touristPlaces;
+    ArrayList<Marker> markers;
+    private RecyclerView horizontalRecyclerView;
+    HashMap<Marker, Integer> markerHash = new HashMap<>();
+    ImageButton googleMapsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle args = intent.getBundleExtra("bundle");
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
+        googleMapsButton = findViewById(R.id.google_maps_button);
+//        googleMapsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int pos = horizontalRecyclerView.
+//            }
+//        });
         initialiseRecyclerView();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -56,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     void initialiseRecyclerView() {
 
-        RecyclerView horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
+        horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         horizontalRecyclerView.setLayoutManager(layoutManager);
         horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
@@ -78,11 +92,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             private void updateMapPosition(int pos) {
                 if(mMap != null) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(touristPlaces.get(pos).getCoordinates()));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(pos).getPosition(), 14));
+                    markers.get(pos).showInfoWindow();
                 }
             }
         });
     }
+
+
 
 
     /**
@@ -100,15 +117,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         showCurrentLocationButton();
 
-        System.out.println("bvdhbvhdbv");
+        markers = new ArrayList<>();
 
         for(int i = 0; i < touristPlaces.size(); i++) {
             LatLng marker = touristPlaces.get(i).getCoordinates();
             System.out.println("Added Marker");
-            mMap.addMarker(new MarkerOptions().position(marker).title(touristPlaces.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            Marker locationMarker = mMap.addMarker(new MarkerOptions().position(marker).title(touristPlaces.get(i).getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            markers.add(locationMarker);
+            markerHash.put(locationMarker, i);
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(touristPlaces.get(0).getCoordinates()));
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+//                TODO Add the google maps direction button
+
+                marker.showInfoWindow();
+                googleMapsButton.setVisibility(View.VISIBLE);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
+                if(markerHash.containsKey(marker))
+                    horizontalRecyclerView.scrollToPosition(markerHash.get(marker));
+                return true;
+            }
+        });
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 14));
+        markers.get(0).showInfoWindow();
     }
 
     private void showCurrentLocationButton() {
@@ -132,11 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-
-
-
-
 
 
 
@@ -166,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             holder.placeRating.setNumStars(touristPlace.getStarRating());
             holder.placeCategory.setText(touristPlace.getCategory());
             holder.placeDescription.setText(touristPlace.getDescription());
-            holder.placeImage.setImageBitmap(touristPlace.getImage(context));
+            Picasso.get().load(touristPlace.getImageLocation()).into(holder.placeImage);
         }
 
         @Override

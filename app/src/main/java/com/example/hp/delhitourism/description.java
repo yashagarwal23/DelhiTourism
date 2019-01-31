@@ -22,7 +22,9 @@ public class description extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("bundle");
@@ -39,13 +41,18 @@ public class description extends AppCompatActivity {
         RecyclerViewPager mRecyclerView = (RecyclerViewPager) findViewById(R.id.list);
 
 // setLayoutManager like normal RecyclerView, you do not need to change any thing.
-        LinearLayoutManager layout = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager layout = new LinearLayoutManager(description.this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(layout);
 
 //set adapter
 //You just need to implement ViewPageAdapter by yourself like a normal RecyclerView.Adpater.
-        mRecyclerView.setAdapter(new descriptionAdapter(this,touristPlaces));
+        mRecyclerView.setAdapter(new descriptionAdapter(description.this,touristPlaces));
     }
 
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.hp.delhitourism.TouristPlace;
 
+import java.util.ArrayList;
+
 public class databaseAccess {
     private SQLiteOpenHelper openHelper;
     private SQLiteDatabase db;
@@ -51,24 +53,44 @@ public class databaseAccess {
         return ans;
     }
 
+    public ArrayList<TouristPlace> getTouristPlacesByCategory(String category) {
+        Cursor cursor = db.rawQuery("select * from touristPlace where category = '"+category+"'",new String[]{});
+        ArrayList<TouristPlace> touristPlaces = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            TouristPlace touristPlace = new TouristPlace();
+            touristPlace.setName(cursor.getString(0));
+            touristPlace.setId(cursor.getString(1));
+            touristPlace.setImageLocation(cursor.getString(2));
+            touristPlace.setStarRating(Double.parseDouble(cursor.getString(3)));
+            //touristPlace.setStarRating(4);
+            touristPlace.setCategory(cursor.getString(4));
+            touristPlace.setLocation(cursor.getString(5));
+            touristPlace.setDescription(cursor.getString(6));
+            touristPlace.setAbout(cursor.getString(7));
+            touristPlace.setLongitude(Double.parseDouble(cursor.getString(8)));
+            touristPlace.setLatitude(Double.parseDouble(cursor.getString(9)));
+
+            touristPlaces.add(touristPlace);
+        }
+        return touristPlaces;
+    }
+
     public TouristPlace getPlace(int i)
     {
         c=db.rawQuery("select * from touristPlace where id = '"+i+"'",new String[]{});
-        TouristPlace temp=new TouristPlace();
+        TouristPlace temp =new TouristPlace();
         while(c.moveToNext())
         {
             temp.setName(c.getString(0));
             temp.setId(c.getString(1));
             temp.setImageLocation(c.getString(2));
             temp.setStarRating(Double.parseDouble(c.getString(3)));
-            //temp.setStarRating(4);
             temp.setCategory(c.getString(4));
             temp.setLocation(c.getString(5));
             temp.setDescription(c.getString(6));
             temp.setAbout(c.getString(7));
-            temp.setLatitude(Double.parseDouble(c.getString(8)));
-            temp.setLongitude(Double.parseDouble(c.getString(9)));
-
+            temp.setLongitude(Double.parseDouble(c.getString(8)));
+            temp.setLatitude(Double.parseDouble(c.getString(9)));
         }
         return temp;
     }
