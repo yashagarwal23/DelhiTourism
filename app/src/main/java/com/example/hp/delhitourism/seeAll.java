@@ -38,6 +38,7 @@ public class seeAll extends AppCompatActivity {
         }
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardAdapter(this,TP));
+        gridview.setColumnWidth(120);
         gridview.setNumColumns(2);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -69,7 +69,7 @@ public class CardAdapter  extends BaseAdapter {
         ratingBar.setRating(s.getStarRating());
         //ratingBar.setNumStars(s.getStarRating());
 
-            Picasso.get().load(s.getImageLocation()).into(img);
+            Picasso.get().load(s.getImageLocation()).resize(50,50).centerCrop().into(img);
 
 
         //img.setImageResource(temp.starRating);
