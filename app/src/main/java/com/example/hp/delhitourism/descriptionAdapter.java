@@ -1,7 +1,10 @@
 package com.example.hp.delhitourism;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +33,7 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
     @Override
     public descriptionHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflator = LayoutInflater.from(viewGroup.getContext());
-        View view = inflator.inflate(R.layout.model, viewGroup, false);
+        View view = inflator.inflate(R.layout.description_xml, viewGroup, false);
         return new descriptionHolder(view);
     }
 
@@ -41,8 +44,17 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
         holder.placeName.setText(temp.getName());
         holder.placeRating.setNumStars(temp.getStarRating());
         holder.placeLocality.setText(temp.getLocation());
+        holder.placeDescription.setText(temp.getDescription());
         holder.placeRating.setRating(temp.getStarRating());
         holder.placeRating.setMax(5);
+        /*holder.getMapsIntent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /public void onClick(View view) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+                //startActivity(intent);
+            }
+        });*/
         Picasso.get().load(temp.getImageLocation()).into(holder.placeImage);
 
     }
@@ -55,8 +67,9 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
     public class descriptionHolder extends RecyclerView.ViewHolder {
 
         ImageView placeImage;
-        TextView placeName, placeLocality;
+        TextView placeName, placeLocality,placeDescription;
         RatingBar placeRating;
+        FloatingActionButton getMapsIntent;
 
         public descriptionHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +77,8 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
             placeName = itemView.findViewById(R.id.placeName);
             placeLocality = itemView.findViewById(R.id.placeLocality);
             placeRating = itemView.findViewById(R.id.placeRating);
+            placeDescription=itemView.findViewById(R.id.placeDescription);
+            getMapsIntent = itemView.findViewById(R.id.displayMaps);
         }
     }
     /*public descriptionHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
