@@ -59,20 +59,14 @@ public class CardAdapter  extends BaseAdapter {
         TextView nameTxt= (TextView) view.findViewById(R.id.placeName);
         TextView propTxt= (TextView) view.findViewById(R.id.placeLocality);
         RatingBar ratingBar=(RatingBar) view.findViewById(R.id.placeRating);
-
-        //BIND
-        //temp.name="NSIT";
-        //temp.location="Delhi";
-        //temp.starRating=4;
         nameTxt.setText(s.getName());
         propTxt.setText(s.getLocation());
         ratingBar.setRating(s.getStarRating());
         //ratingBar.setNumStars(s.getStarRating());
 
-            Picasso.get().load(s.getImageLocation()).into(img);
+        Picasso.get().load(s.getImageLocation()).into(img);
 
 
-        //img.setImageResource(temp.starRating);
 
         /*view.setOnClickListener(new View.OnClickListener() {
             @Override
