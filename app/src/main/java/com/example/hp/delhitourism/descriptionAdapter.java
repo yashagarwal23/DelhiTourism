@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.hp.delhitourism.Adapters.HorizontalViewAdapter;
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,22 +39,24 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull descriptionHolder holder, int i) {
-        TouristPlace temp=TP.get(i);
+        final TouristPlace temp=TP.get(i);
         //holder.placeImage.setImageBitmap(temp.getImage(context));
         holder.placeName.setText(temp.getName());
         holder.placeRating.setNumStars(temp.getStarRating());
         holder.placeLocality.setText(temp.getLocation());
         holder.placeDescription.setText(temp.getDescription());
         holder.placeRating.setRating(temp.getStarRating());
-        holder.placeRating.setMax(5);
-        /*holder.getMapsIntent.setOnClickListener(new View.OnClickListener() {
+        //holder.placeRating.setNumStars(5);
+        //holder.placeRating.setMax(5);
+        holder.getMapsIntent.setOnClickListener(new View.OnClickListener() {
             @Override
-            /public void onClick(View view) {
+            public void onClick(View view) {
+                LatLng latlng =temp.getCoordinates();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
-                //startActivity(intent);
+                        Uri.parse("http://maps.google.com/maps?daddr="+latlng.latitude+","+latlng.longitude));
+                context.startActivity(intent);
             }
-        });*/
+        });
         Picasso.get().load(temp.getImageLocation()).into(holder.placeImage);
 
     }
@@ -78,6 +81,7 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
             placeRating = itemView.findViewById(R.id.placeRating);
             placeDescription=itemView.findViewById(R.id.placeDescription);
             getMapsIntent = itemView.findViewById(R.id.displayMaps);
+            getMapsIntent.setImageResource(R.drawable.googlemap);
         }
     }
 
