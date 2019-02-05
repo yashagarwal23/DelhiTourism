@@ -4,9 +4,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,11 +42,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final int RequestLocation = 100;
     private GoogleMap mMap;
-    ArrayList<TouristPlace> touristPlaces;
-    ArrayList<Marker> markers;
-    private RecyclerView horizontalRecyclerView;
-    HashMap<Marker, Integer> markerHash = new HashMap<>();
-    ImageButton googleMapsButton;
+    private ArrayList<TouristPlace> touristPlaces;
+    private ArrayList<Marker> markers;
+    private RecyclerViewPager horizontalRecyclerView;
+    private HashMap<Marker, Integer> markerHash = new HashMap<>();
+    private ImageButton googleMapsButton;
+    private Location currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +59,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
         googleMapsButton = findViewById(R.id.google_maps_button);
-//        googleMapsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int pos = horizontalRecyclerView.
-//            }
-//        });
+        googleMapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager)horizontalRecyclerView.getLayoutManager();
+                int pos = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+
+                String map = "http://maps.google.co.in/maps?q=" + touristPlaces.get(pos).getName() + ", New Delhi";
+
+                Uri gmmIntentUri = Uri.parse(map);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
+
         initialiseRecyclerView();
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -70,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     void initialiseRecyclerView() {
 
-        horizontalRecyclerView = findViewById(R.id.mapRecyclerView);
+        horizontalRecyclerView = (RecyclerViewPager) findViewById(R.id.mapRecyclerView);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         horizontalRecyclerView.setLayoutManager(layoutManager);
         horizontalRecyclerView.setAdapter(new MapRecyclerViewAdapter(touristPlaces, this));
@@ -81,12 +97,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         horizontalRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                googleMapsButton.setVisibility(View.GONE);
                 if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     View centerView = snapHelper.findSnapView(layoutManager);
                     if (centerView != null) {
                         int pos = layoutManager.getPosition(centerView);
                         updateMapPosition(pos);
                     }
+                    googleMapsButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -98,9 +116,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
-
-
 
     /**
      * Manipulates the map once available.
@@ -143,14 +158,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markers.get(0).getPosition(), 14));
         markers.get(0).showInfoWindow();
+        googleMapsButton.setVisibility(View.VISIBLE);
     }
 
     private void showCurrentLocationButton() {
-        if(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-        }
-        else {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, RequestLocation);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+            }
+            else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, RequestLocation);
+            }
         }
     }
 
@@ -195,6 +213,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             holder.placeRating.setNumStars(touristPlace.getStarRating());
             holder.placeCategory.setText(touristPlace.getCategory());
             holder.placeDescription.setText(touristPlace.getDescription());
+            holder.placeLocality.setText(touristPlace.getLocation());
+
+//            TODO implement proper placeDistance
+            holder.placeDistance.setText("1 Km");
+
             Picasso.get().load(touristPlace.getImageLocation()).into(holder.placeImage);
         }
 
@@ -206,20 +229,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public class MapRecyclerViewHolder extends RecyclerView.ViewHolder {
 
             ImageView placeImage;
-            TextView placeName, placeCategory, placeDescription;
+            TextView placeName, placeCategory, placeDescription, placeLocality, placeDistance;
             RatingBar placeRating;
 
             public MapRecyclerViewHolder(@NonNull View itemView) {
                 super(itemView);
                 placeImage = itemView.findViewById(R.id.map_place_image_view);
                 placeName = itemView.findViewById(R.id.map_place_name);
-                placeRating = itemView.findViewById(R.id.map_place_rating);
+                placeRating = (AppCompatRatingBar) itemView.findViewById(R.id.map_place_rating);
                 placeCategory = itemView.findViewById(R.id.map_place_category);
                 placeDescription = itemView.findViewById(R.id.map_place_description);
+                placeLocality = itemView.findViewById(R.id.locality_text_view);
+                placeDistance = itemView.findViewById(R.id.distance_text_view);
             }
         }
-
     }
-
-
 }
