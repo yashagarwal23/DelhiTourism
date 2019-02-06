@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         RecyclerView recyclerView = findViewById(R.id.category_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CategoryRecyclerViewAdapter(new String[]{"religious place", "Museum"}, this));
+        recyclerView.setAdapter(new CategoryRecyclerViewAdapter(new String[]{"religious place", "Museum"
+        }, this));
     }
 
     @Override

@@ -50,7 +50,7 @@ public class CardAdapter  extends BaseAdapter {
         return TP.get(i);
     }
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         if(view==null)
         {
             view= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
@@ -81,6 +81,7 @@ public class CardAdapter  extends BaseAdapter {
                 Bundle args = new Bundle();
                 args.putSerializable("tourist places", TP);
                 myIntent.putExtra("bundle", args);
+                myIntent.putExtra("position",i);
                 c.startActivity(myIntent);
             }
         });

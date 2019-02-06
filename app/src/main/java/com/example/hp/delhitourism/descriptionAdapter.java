@@ -27,6 +27,7 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
     public descriptionAdapter(Context c, ArrayList<TouristPlace> TP) {
         this.context = c;
         temp=new TouristPlace();
+
         this.TP=TP;
     }
     @NonNull

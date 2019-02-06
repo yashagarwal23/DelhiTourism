@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class description extends AppCompatActivity {
 
+    int currentPosition=0;
     ArrayList<TouristPlace> touristPlaces;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class description extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("bundle");
+        currentPosition=getIntent().getIntExtra("position", 0);
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -43,6 +45,7 @@ public class description extends AppCompatActivity {
 // setLayoutManager like normal RecyclerView, you do not need to change any thing.
         LinearLayoutManager layout = new LinearLayoutManager(description.this,LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(layout);
+        mRecyclerView.scrollToPosition(currentPosition);
 
 //set adapter
 //You just need to implement ViewPageAdapter by yourself like a normal RecyclerView.Adpater.
