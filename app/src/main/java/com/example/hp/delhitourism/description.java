@@ -32,14 +32,6 @@ public class description extends AppCompatActivity {
         currentPosition=getIntent().getIntExtra("position", 0);
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         RecyclerViewPager mRecyclerView = (RecyclerViewPager) findViewById(R.id.list);
 
 // setLayoutManager like normal RecyclerView, you do not need to change any thing.

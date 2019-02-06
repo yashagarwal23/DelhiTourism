@@ -35,10 +35,6 @@ public class CardAdapter  extends BaseAdapter {
         return TP.size();
     }
 
-    /*@Override
-    public Object getItem(int i) {
-        return spacecrafts.get(i);
-    }*/
 
     @Override
     public long getItemId(int i) {
