@@ -41,7 +41,7 @@ public class HorizontalViewAdapter extends RecyclerView.Adapter<HorizontalViewAd
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalViewHolder holder, final int i) {
-        Picasso.get().load(data[i].getImageLocation()).into(holder.placeImage);
+        Picasso.get().load(data[i].getImageLocation()).placeholder(context.getResources().getDrawable(R.drawable.default_image)).error(context.getResources().getDrawable(R.drawable.default_image)).into(holder.placeImage);
         holder.placeName.setText(data[i].getName());
         holder.placeRating.setNumStars(data[i].getStarRating());
         holder.placeLocality.setText(data[i].getLocation());
