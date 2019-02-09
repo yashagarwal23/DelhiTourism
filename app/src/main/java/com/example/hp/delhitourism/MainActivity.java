@@ -1,6 +1,8 @@
 package com.example.hp.delhitourism;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.hp.delhitourism.Adapters.CategoryRecyclerViewAdapter;
+import com.example.hp.delhitourism.data.placeContract;
+import com.example.hp.delhitourism.data.placeDBHelper;
 import com.example.hp.delhitourism.offlineDatabase.databaseAccess;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -87,6 +92,26 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    void insertPlace()
+    {
+        placeDBHelper mDbHelper=new placeDBHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Create a ContentValues object where column names are the keys,
+        // and Toto's pet attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(placeContract.placeEntry.COLUMN_PLACE_NAME,"checking");
+        long newRowId = db.insert(placeContract.placeEntry.TABLE_NAME, null, values);
+        if(newRowId==-1)
+        {
+            Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+        }
+        if(newRowId>=0)
+        {
+            Toast.makeText(this,"complete",Toast.LENGTH_SHORT).show();
+        }
+
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -94,12 +119,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            Intent myIntent = new Intent(MainActivity.this,seeAll.class);
-            //myIntent.putExtra("key", value); //Optional parameters
-            MainActivity.this.startActivity(myIntent);
+            //Toast.makeText(this,"camera",Toast.LENGTH_SHORT).show();
+            insertPlace();
         } else if (id == R.id.nav_gallery) {
 //            TODO implement proper intent
-
             Intent intent = new Intent(MainActivity.this, MapsActivity.class);
             databaseAccess db = databaseAccess.getInstance(this);
             db.open();

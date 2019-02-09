@@ -34,8 +34,8 @@ public class placeDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the pets table
         String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + placeEntry.TABLE_NAME + " ("
-                + placeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + placeEntry.COLUMN_PLACE_NAME + " TEXT NOT NULL, "
+                + placeEntry._ID + " INTEGER , "
+                + placeEntry.COLUMN_PLACE_NAME + " TEXT, "
                 + placeEntry.COLUMN_PLACE_CATEGORY + " TEXT , "
                 + placeEntry.COLUMN_PLACE_LOCATION + " TEXT , "
                 + placeEntry.COLUMN_PLACE_ABOUT + " TEXT, "
