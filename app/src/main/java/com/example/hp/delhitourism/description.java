@@ -31,6 +31,7 @@ public class description extends AppCompatActivity {
         Bundle args = intent.getBundleExtra("bundle");
         currentPosition=getIntent().getIntExtra("position", 0);
         touristPlaces = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
+        getSupportActionBar().setTitle(touristPlaces.get(0).getCategory());
 
         RecyclerViewPager mRecyclerView = (RecyclerViewPager) findViewById(R.id.list);
 

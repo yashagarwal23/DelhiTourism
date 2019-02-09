@@ -26,16 +26,18 @@ public class seeAll extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("bundle");
+        TP = (ArrayList<TouristPlace>) args.getSerializable("tourist places");
+        getSupportActionBar().setTitle(TP.get(0).getCategory());
         databaseAccess da= databaseAccess.getInstance(getApplicationContext());
         da.open();
         int n=da.getCount();
-        TP =new ArrayList<TouristPlace>();
+        //TP =new ArrayList<TouristPlace>();
+        //mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        //setSupportActionBar(mActionBarToolbar);
+        //getSupportActionBar().setTitle("My title");
 
-        for(int i=1;i<=n;i++)
-        {
-            TouristPlace temp=da.getPlace(i);
-            TP.add(temp);
-        }
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new CardAdapter(this,TP));
         gridview.setNumColumns(2);
