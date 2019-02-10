@@ -4,7 +4,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-public class placeContract {
+public final class placeContract {
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
     private placeContract() {}

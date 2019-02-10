@@ -35,10 +35,6 @@ public class CardAdapter  extends BaseAdapter {
         return TP.size();
     }
 
-    /*@Override
-    public Object getItem(int i) {
-        return spacecrafts.get(i);
-    }*/
 
     @Override
     public long getItemId(int i) {
@@ -50,7 +46,7 @@ public class CardAdapter  extends BaseAdapter {
         return TP.get(i);
     }
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         if(view==null)
         {
             view= LayoutInflater.from(c).inflate(R.layout.model,viewGroup,false);
@@ -65,9 +61,9 @@ public class CardAdapter  extends BaseAdapter {
         nameTxt.setText(s.getName());
         propTxt.setText(s.getLocation());
         ratingBar.setRating(s.getStarRating());
-        //ratingBar.setNumStars(s.getStarRating());
 
-        Picasso.get().load(s.getImageLocation()).into(img);
+        Picasso.get().load(s.getImageLocation()).placeholder(c.getResources().getDrawable(R.drawable.default_image)).error(c.getResources().getDrawable(R.drawable.default_image)).into(img);
+        //Picasso.with(c).load(www.google.com/image/1).placeholder(c.getResources().getDrawable(R.drawable.default_person_image)).error(c.getResources().getDrawable(R.drawable.default_person_image)).into(pictureView)
 
 
 
@@ -75,12 +71,11 @@ public class CardAdapter  extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(c,description.class);
-                //myIntent.putExtra("key", value); //Optional parameters
                 ArrayList<TouristPlace> touristPlaces = TP;
-
                 Bundle args = new Bundle();
                 args.putSerializable("tourist places", TP);
                 myIntent.putExtra("bundle", args);
+                myIntent.putExtra("position",i);
                 c.startActivity(myIntent);
             }
         });

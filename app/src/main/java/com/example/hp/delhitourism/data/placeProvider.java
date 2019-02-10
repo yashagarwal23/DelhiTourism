@@ -104,7 +104,7 @@ public class placeProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case TOURIST_PLACE:
-                return insertPet(uri, contentValues);
+                return insertPlace(uri, contentValues);
             default:
                 throw new IllegalArgumentException("Insertion is not supported for " + uri);
         }
@@ -114,7 +114,7 @@ public class placeProvider extends ContentProvider {
      * Insert a pet into the database with the given content values. Return the new content URI
      * for that specific row in the database.
      */
-    private Uri insertPet(Uri uri, ContentValues values) {
+    private Uri insertPlace(Uri uri, ContentValues values) {
         // Check that the name is not null
         String name = values.getAsString(placeEntry.COLUMN_PLACE_NAME);
         if (name == null) {

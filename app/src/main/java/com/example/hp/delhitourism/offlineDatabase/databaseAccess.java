@@ -62,7 +62,6 @@ public class databaseAccess {
             touristPlace.setId(cursor.getString(1));
             touristPlace.setImageLocation(cursor.getString(2));
             touristPlace.setStarRating(Double.parseDouble(cursor.getString(3)));
-            //touristPlace.setStarRating(4);
             touristPlace.setCategory(cursor.getString(4));
             touristPlace.setLocation(cursor.getString(5));
             touristPlace.setDescription(cursor.getString(6));

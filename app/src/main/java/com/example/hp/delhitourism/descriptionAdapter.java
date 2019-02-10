@@ -27,6 +27,7 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
     public descriptionAdapter(Context c, ArrayList<TouristPlace> TP) {
         this.context = c;
         temp=new TouristPlace();
+
         this.TP=TP;
     }
     @NonNull
@@ -53,7 +54,7 @@ public class descriptionAdapter extends RecyclerView.Adapter<descriptionAdapter.
             public void onClick(View view) {
                 LatLng latlng =temp.getCoordinates();
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?daddr="+latlng.latitude+","+latlng.longitude));
+                        Uri.parse("http://maps.google.com/maps?daddr="+temp.getName()+", Delhi"));
                 context.startActivity(intent);
             }
         });

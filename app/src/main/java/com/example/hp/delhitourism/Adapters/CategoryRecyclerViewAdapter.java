@@ -18,6 +18,7 @@ import com.example.hp.delhitourism.R;
 import com.example.hp.delhitourism.TouristPlace;
 import com.example.hp.delhitourism.Utils;
 import com.example.hp.delhitourism.offlineDatabase.databaseAccess;
+import com.example.hp.delhitourism.seeAll;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         holder.seeOnMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MapsActivity.class);
+                Intent intent = new Intent(context, seeAll.class);
                 Bundle args = new Bundle();
                 args.putSerializable("tourist places", temp);
                 intent.putExtra("bundle", args);
